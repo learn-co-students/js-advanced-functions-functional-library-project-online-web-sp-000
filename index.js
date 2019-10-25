@@ -26,5 +26,4 @@ const fi = (function() {
 
 fi.libraryMethod()
 
-fi.functions(fi);
-=> ["compact", "each", "filter", "find", "first", "functions", "last", "map", "reduce", "size", "sortBy"]
+
