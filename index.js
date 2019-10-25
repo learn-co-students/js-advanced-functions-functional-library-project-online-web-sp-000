@@ -5,28 +5,28 @@ const fi = (function() {
     },
 
     each: function(collection, iteratee) {
-       const newCollection = (collection instanceof Array) ? collection.slice() : Object.values(collection)
+      const newCollection = (collection instanceof Array) ? collection.slice() : Object.values(collection)
 
       for (let idx = 0; idx < newCollection.length; idx++)
         iteratee(newCollection[idx])
 
       return collection
-
     },
 
-    map: function(collection, iteratee) { 
+    map: function(collection, iteratee) {
       if (!(collection instanceof Array))
-        collection = Object.values(collection) 
+        collection = Object.values(collection)
 
-        const newArr = [] 
+      const newArr = []
 
-        for (let idx = 0; idx < collection.length; idx++)
+      for (let idx = 0; idx < collection.length; idx++)
         newArr.push(iteratee(collection[idx]))
 
-        return newArr 
+      return newArr
     },
 
-    reduce: function(c = [], callback = () => {}, acc) {
+
+		reduce: function(c = [], callback = () => {}, acc) {
 			let collection = c.slice(0)
 
 			if (!acc) {
@@ -144,14 +144,15 @@ const fi = (function() {
     },
 
     values: function(obj) {
-
+      // Using for loop
       const values = []
       for (let key in obj){
         values.push(obj[key])
       }
       return values
 
-    
+      // Using the custom 'map' method from above
+      // return this.map(obj, (value) => value)
 
     },
 
