@@ -50,13 +50,17 @@ const fi = (function() {
       for (i; i<collection.length;i++) {
         reducedValue = callback(reducedValue, collection[i], collection)
       };
-      console.log(reducedValue)
       return reducedValue
     },
 
-    functions: function() {
-
-    },
+    // currently working on this.
+    find: function(collection, callback) {
+      collection.forEach(element => {
+        if (callback(element)) {
+          return callback(element)
+        };
+      });
+    }
 
 
   }
