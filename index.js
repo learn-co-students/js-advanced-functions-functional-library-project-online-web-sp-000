@@ -37,17 +37,18 @@ const fi = (function() {
     },
 
     reduce: function(collection, callback, acc) {
-      let reducedValue,i;
+      let reducedValue, i;
+      reducedValue = acc;
       if (acc === undefined) {
         reducedValue = collection[0];
-        i = 0;
+        i = 1;
       } else {
         reducedValue = acc;
-        i = 1;
+        i = 0;
       };
 
-      for (let i; i>collection.length;i++) {
-        reducedValue = callback(reducedValue, collection[i])
+      for (i; i<collection.length;i++) {
+        reducedValue = callback(reducedValue, collection[i], collection)
       };
       console.log(reducedValue)
       return reducedValue
