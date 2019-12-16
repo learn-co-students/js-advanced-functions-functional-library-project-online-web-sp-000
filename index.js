@@ -134,24 +134,93 @@ const fi = (function() {
     },
 
     sortBy: function(collection, callback) {
+      let index = [];
+      let callbackValues = [];
+      let sortedCollection = [];
 
+      collection.forEach(element =>{
+        callbackValues.push([element, callback(element)]);
+      })
+
+      if (typeof callbackValues[0][0] === "string")  {
+        callbackValues.sort();
+      } else {
+        callbackValues.sort((a,b) => {
+          return a[1] -b[1]
+        });
+      }
+
+      callbackValues.forEach(array => {
+        sortedCollection.push(array[0])
+      })
+      return sortedCollection
+    },
+    
+    
+    //study these two (three with unpack) methods below, know how they work.
+    unpack: function(receiver, arr) {
+      for (let val of arr)
+        receiver.push(val)
+    },
+    
+    flatten: function(collection, shallow, newArr=[]) {
+      if (!Array.isArray(collection)) return newArr.push(collection)
+      if (shallow) {
+        for (let val of collection)
+          Array.isArray(val) ? this.unpack(newArr, val) : newArr.push(val)
+      } else {
+        for (let val of collection) {
+          this.flatten(val, false, newArr)
+        }
+      }
+      return newArr
+    },
+    
+    uniq: function(collection, iteratee) {
+      const sorted = [collection[0]]
+      for (let idx = 1; idx < collection.length; idx++) {
+        if (sorted[idx-1] !== collection[idx])
+          sorted.push(collection[idx])
+      }
+      return sorted
     },
 
-    flatten: function() {},
-    uniq: function() {},
+    // flatten: function(array) {
+    //   let flattenedArray = []
+    //   array.forEach(element => {
+    //     if (typeof element === array) {
+    //       // go one level deeper into the array
+    //       // convert all elements to outside array
+    //     } else {
+    //       flattenedArray.push(element)
+    //     }
+    //   })
+    //
+    //   function arrayConverter(array) {
+    //
+    //   }
+    // },
 
-    keys: function(object) {
-      let newArray = Object.keys(object);
-      return newArray;
-    },
+    // uniq: function() {},
+    //
+    // keys: function(object) {
+    //   let newArray = Object.keys(object);
+    //   return newArray;
+    // },
 
     values: function(object) {
       let newArray = Object.values(object);
       return newArray;
     },
-    
-    functions: function() {}
+
+    functions: function(object) {
+      let sortedKeys = [];
+      let functionsArray;
+      functionsArray = Object.values(object).filter( element => element != "")
+      return functionsArray
+    }
   }
 })()
 
 fi.libraryMethod()
+
