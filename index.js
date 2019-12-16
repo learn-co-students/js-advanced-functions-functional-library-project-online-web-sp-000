@@ -55,14 +55,102 @@ const fi = (function() {
 
     // currently working on this.
     find: function(collection, callback) {
+      let returnValue = false;
+      let j=0;
+
+      while (returnValue === false && j < collection.length) {
+        returnValue = !!(callback(collection[j]));
+        j++;
+      }
+
+      if (returnValue === false) {
+        return undefined;
+      } else {
+        return collection[j - 1]
+      }
+    },
+
+    filter: function(collection, callback) {
+      let returnArray = [];
       collection.forEach(element => {
-        if (callback(element)) {
-          return callback(element)
+        if (!!(callback(element))) {
+          returnArray.push(element);
         };
       });
-    }
+      return returnArray;
+    },
 
+    size: function(collection) {
+      if (Array.isArray(collection)) {
+        return collection.length;
+      } else {
+        let keys = Object.keys(collection).length;
+        return keys;
+      }
+    },
+    first: function(collection, number) {
+      let newArray = [];
+      let parsedNumber;
+      let i = 0;
 
+      if (number === undefined) {
+        return collection[0]
+      } else {
+        parsedNumber = parseInt(number, 10);
+      };
+      while (i < parsedNumber) {
+        newArray.push(collection[i]);
+        i++
+      };
+      return newArray
+    },
+
+    last: function(collection, number) {
+      let newArray = [];
+      let parsedNumber;
+      let i = 1;
+
+      if (number === undefined) {
+        return collection[collection.length - 1];
+      } else {
+        parsedNumber = parseInt(number, 10);
+      };
+
+      while (i <= parsedNumber) {
+        newArray.unshift(collection[collection.length - i])
+        i++
+      };
+      return newArray;
+    },
+
+    compact: function(collection) {
+      let newArray = [];
+      collection.forEach(element => {
+        if (!!(element)) {
+          newArray.push(element)
+        };
+      });
+      return newArray;
+    },
+
+    sortBy: function(collection, callback) {
+
+    },
+
+    flatten: function() {},
+    uniq: function() {},
+
+    keys: function(object) {
+      let newArray = Object.keys(object);
+      return newArray;
+    },
+
+    values: function(object) {
+      let newArray = Object.values(object);
+      return newArray;
+    },
+    
+    functions: function() {}
   }
 })()
 
