@@ -61,19 +61,30 @@ const fi = (function() {
     flatten: function(array,name=false){
       if (!name){
         while (array.find(e=>Array.isArray(e))){
+          console.log(array)
           array = array.flat()
         }
       }else{
           array = array.flat()
         }
        return array
-      }
+     },
 
+     uniq: function(array, [isSorted], [callback]){
+        return array.uniq()
+     },
 
+     keys: function(object){
+       return Object.keys(object)
+     },
 
+     values: function(object){
+       return Object.values(object)
+     },
 
-
-
+     functions: function(object){
+        return Object.getOwnPropertyNames(object).filter(item=>typeof(object[item]) === "function").sort()
+     }
 
 
   }
