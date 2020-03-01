@@ -5,8 +5,9 @@ const fi = (function() {
     },
 
     each: function(collection, callback) {
-      let answer = fi.each(element, index, collection)
-      console.log(callback)
+      let answer = fi.each(element, index, collection){
+        callback(answer[index])
+      }
       return answer
     },
 
