@@ -61,32 +61,85 @@ const fi = (function() {
       return newValues  
     },
 
-    size: function() {
+    size: function(collection) {
       if(typeof collection === 'object')
       collection = Object.values(collection)
       return collection.length
     },
 
-    first: function() {
-
+    first: function(array, n) {
+      return (!!n) ? array.slice(0, n) : array[0]
     },
 
-    last: function() {
-
+    last: function(array, n) {
+      return (n) ? array.slice(array.length-n, array.length) : array[array.length-1]
     },
 
-    compact: function() {
-
+    compact: function(array) {
+      return array.filter(Boolean)
     }, 
 
-    sortBy: function() {
-
+    sortBy: function(array, callback) {
+      const newArray = [...array] //... or Object.assign - copies/spreads
+      return newArray.sort(function(a, b) {
+        return callback(a) - callback(b)
+      })
     },
 
+    flatten: function(array, shallow) {
+      return (shallow) ? array.flat(1) : array.flat(Infinity)
+    },
 
+    uniq: function(array, isSorted, callback) {
+      const newArray = [...array]
+      if(callback) {
+        const modifiedArray = new Set()
+        const originalArray = new Set()
 
+        for(let value of newArray) {
+          const newValue = callback(value) 
+          if(!modifiedArray.has(newValue)) {
+            modifiedArray.add(newValue)
+            originalArray.add(value)
+          } 
+        }
+        return(Array.from(originalArray))
+      } else if(isSorted) {
+        return newArray.filter((value, index, array) => array.indexOf(value) === index)
+      } else {
+        return newArray.filter((value, index, array) => array.indexOf(value) === index)
+      }
+    },
+//read Set()
+//let of vs let in
+
+    keys: function(object) {
+      const keyArray = []
+      for (const key in object) {
+        keyArray.push(key)
+      }
+      return keyArray
+    },
+
+    values: function(object) {
+      const valueArray = []
+      for (const value in object) {
+        valueArray.push(object[value])
+      }
+      return valueArray
+    },
+
+    functions: function(object) {
+      const functionArray = []
+      for (const key in object) {
+        if(typeof object[key] === "function")
+        functionArray.push(object[key])
+      }
+      return functionArray
+    }
 
   }
+
 })()
 
 fi.libraryMethod()
