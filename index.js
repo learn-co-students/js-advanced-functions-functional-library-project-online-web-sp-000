@@ -62,7 +62,9 @@ const fi = (function() {
     },
 
     size: function() {
-
+      if(typeof collection === 'object')
+      collection = Object.values(collection)
+      return collection.length
     },
 
     first: function() {
