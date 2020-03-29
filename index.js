@@ -19,8 +19,10 @@ const fi = (function() {
       return collection
     },
 
-    map: function() {
-
+    map: function(collection, callback) {
+      return collection.map(x => callback(x))
+      //produces new array by mapping each value in collection through callback
+      //returns new collection without modifying original
     },
 
     reduce: function() {
