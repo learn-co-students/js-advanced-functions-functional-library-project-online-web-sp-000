@@ -21,7 +21,18 @@ const fi = (function() {
         },
 
 
-        reduce: function() {},
+        reduce: function(collection, callback, acc) {
+            if (!acc) {
+                acc = collection[0]
+                collection = collection.slice(1)
+            }
+            for (let i = 0; i < collection.length; i++) { acc = callback(acc, collection[i], collection) }
+            return acc
+
+        },
+
+
+
 
         functions: function() {
 
