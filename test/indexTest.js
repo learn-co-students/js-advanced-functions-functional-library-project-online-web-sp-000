@@ -18,11 +18,7 @@ describe('index.js', function () {
       fi.each(testArr, alert)
       expect(alert).to.have.been.called.exactly(testArr.length)
     })
-  })
-})
 
-
-/**
     it('calls alert properly on object values', function () {
       fi.each(testObj, spy)
       const objValues = Object.values(testObj)
@@ -334,4 +330,3 @@ function bench(method, iterations, args, context) {
     // console.log("Sum execution time was: ", totalTime);
     return totalTime / parseFloat(iterations);
 };
-**/
