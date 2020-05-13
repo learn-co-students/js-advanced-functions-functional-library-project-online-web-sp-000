@@ -110,21 +110,29 @@ const fi = (function() {
       return flatArr;
     },
 
-    uniq: function(array, isSorted, callback) {
+    uniq: function(collection, isSorted, callback=false) {
+      let sortArr = (collection instanceof Array) ? collection.slice() : Object.values(collection);
       let newArr = [];
-      if (callback !== undefined) {
-        newArr = array.slice();
-        newArr.sort((a, b) => callback(a) - callback(b));
-      } else if (isSorted){
-        for (let i = 0; i < array.length; i++) {
-          if (array[i]>array[i-1]){
-            newArr.push(array[i]);
+      let valArr = [];
+      if (callback) {
+        //let sortArr = array.slice();
+        for (let i = 0; i < sortArr.length; i++) {
+          let val = callback(sortArr[i]);
+          if (!(valArr.includes(val))) {
+            newArr.push(sortArr[i]);
+            valArr.push(val);
           }
         }
+      } else if (isSorted){
+        // for (let i = 0; i < array.length; i++) {
+        //   if (array[i]>array[i-1]){
+        //     newArr.push(array[i]);
+        //   }
+        // }
       } else {
-        for (let i = 0; i < array.length; i++) {
-          if (!(newArr.includes(array[i]))) {
-            newArr.push(array[i]);
+        for (let i = 0; i < sortArr.length; i++) {
+          if (!(newArr.includes(sortArr[i]))) {
+            newArr.push(sortArr[i]);
           }
         }
       }
@@ -150,7 +158,9 @@ const fi = (function() {
     functions: function(object) {
       let keys = [];
       for (const key in object) {
-        keys.push(key);
+        if (typeof object[key] === 'function'){
+          keys.push(key);
+        }
       }
       return keys.sort();
     },
