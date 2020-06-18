@@ -93,8 +93,8 @@ const fi = (function() {
     },
 
     sortBy: function(array, callback) {
-      let newArray = array.map(callback)
-      return newArray.sort(function(a, b){return a - b})
+      let newArray = [...array];
+      return newArray.sort(function(callback(a), callback(b)){return a - b})
     },
 
   }
