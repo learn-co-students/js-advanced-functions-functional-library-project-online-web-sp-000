@@ -20,9 +20,9 @@ describe('index.js', function () {
     })
 
     it('calls alert properly on object values', function () {
-      fi.each(testObj, spy)
+      fi.each(testObj, alert)
       const objValues = Object.values(testObj)
-      objValues.forEach((val) => { expect(spy).to.have.been.called.with(val) })
+      objValues.forEach((val) => { expect(alert).to.have.been.called.with(val) })
     })
 
     it('returns the original collection', function () {
