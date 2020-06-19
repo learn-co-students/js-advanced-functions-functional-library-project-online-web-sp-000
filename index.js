@@ -94,8 +94,75 @@ const fi = (function() {
 
     sortBy: function(array, callback) {
       let newArray = [...array];
-      return newArray.sort(function(callback(a), callback(b)){return a - b})
+      return newArray.sort(function(a, b){return callback(a) - callback(b)})
     },
+
+    flatten: function(array, shallow) {
+      if (shallow == true){
+        let newArray = [...array];
+        //console.log(newArray)
+        return newArray.reduce((acc, val) => acc.concat(val), []);
+      } else {
+        let newArray = [];
+        for (let i=0; i<array.length; i++){
+          if (Array.isArray(array[i])){
+            newArray = newArray.concat(this.flatten(array[i]));
+          } else {
+            newArray.push(array[i]);
+          }
+        }
+        return newArray
+      }
+    },
+
+    uniq: function(array, isSorted, callback) {
+
+      if (isSorted != undefined && callback != undefined){
+        let newArray = []
+        let resultingArray = []
+
+          for (let i=0; i< array.length; i++){
+            let a =  callback(array[i])
+            //console.log("a:",a, "element:", array[i])
+              if (!resultingArray.includes(a)){
+                //console.log("not in array")
+              //console.log("array:",resultingArray)
+              resultingArray.push(a)
+              newArray.push(array[i])
+              //console.log("element:",array[i], "push:", resultingArray)
+            } else {
+              console.log("already on array")
+            }
+        }
+        return newArray;
+        console.log(newArray, resultingArray)
+
+      } else {
+        let newArray = array.filter((item, i, ar) => ar.indexOf(item) === i);
+        console.log(newArray)
+        return newArray
+      }
+
+    },
+
+    keys: function(object) {
+      return Object.keys(object)
+    },
+
+    values: function(object) {
+      return Object.values(object)
+    },
+
+    functions: function(object) {
+      let functions = []
+      let values = Object.values(object)
+      values.forEach(element => {
+        if (typeof element === "function"){
+          functions.push(element)
+        }
+      })
+    return functions.sort()
+  },
 
   }
 })()
