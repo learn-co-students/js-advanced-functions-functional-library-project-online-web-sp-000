@@ -78,14 +78,6 @@ const fi = (function() {
       return (start) ? collection.slice(collection.length-start, collection.length) : collection[collection.length-1]
     },
 
-    first: function(collection, stop=false) {
-      return (stop) ? collection.slice(0, stop) : collection[0]
-    },
-
-    last: function(collection, start=false) {
-      return (start) ? collection.slice(collection.length-start, collection.length) : collection[collection.length-1]
-    },
-
     compact: function(collection) {
       const badBad = new Set([false, null, 0, "", undefined, NaN])
       return collection.filter(el => !badBad.has(el))
