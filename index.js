@@ -136,6 +136,7 @@ function sortObj(objs) {
     newObj.push({key:prop, value: objs[prop]})
   }
   newObj.sort((a,b) => a.value - b.value)
+  console.log(newOjb[0].value)
 }
 
 sortObj(objs)
