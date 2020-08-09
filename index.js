@@ -19,7 +19,6 @@ const fi = (function() {
       }
       return newObj
     },
-
     reduce: function(myArray, callback, acc) {
       let total = 0
       if (typeof acc === 'undefined') {
@@ -37,7 +36,6 @@ const fi = (function() {
         return sum2
       }
     },
-
     find: function(obj, callback) {
       let i = 0
       for (i; i<obj.length; i++) {
@@ -48,7 +46,6 @@ const fi = (function() {
       }
       return obj[i]
     },
-
     filter: function(obj, callback) {
       let col = []
       for (let i = 0; i<obj.length; i++) {
@@ -58,12 +55,10 @@ const fi = (function() {
       }
       return col
     },
-
     size: function(obj) {
         let col = (obj instanceof Array) ? obj.slice().length : Object.entries(obj)
         return col.length
     },
-
     first: function(arr, n) {
       if (typeof n === 'undefined') {
         return arr[0]
@@ -71,7 +66,6 @@ const fi = (function() {
         return arr.slice(0, n)
       }
     },
-
     last: function(arr, n) {
       if (typeof n === 'undefined') {
         return arr[arr.length-1]
@@ -79,7 +73,6 @@ const fi = (function() {
         return arr.slice(n-2)
       }
     },
-
     compact: function(arr) {
       let col = []
       for (let i=0; i<arr.length; i++) {
@@ -89,7 +82,6 @@ const fi = (function() {
       }
       return col
     },
-
     sortBy: function(arr, callback) {
       let newArr = Array.from(arr)
       if (typeof newArr[0] === 'string') {
@@ -100,7 +92,7 @@ const fi = (function() {
           for (let n=0; n<newArr.length; n++) {
             colObj[newArr[n]] = callback(newArr[n])
           }
-          colObj
+          return sortObj(colObj)
         } else {
             return newArr.sort(function(a, b) {return a-b})
           }
@@ -115,30 +107,93 @@ const fi = (function() {
         }
         return sorted
       }
+      function sortObj(objs) {
+        let newObj = []
+        let returnArray = []
+        for (const prop in objs) {
+          newObj.push({key:prop, value: objs[prop]})
+        }
+        newObj.sort((a,b) => a.value - b.value)
+        for (const e of newObj) {
+          returnArray.push(parseInt(e.key))
+        }
+        return returnArray
+      }
+    },
+    flatten: function(arr, boolean) {
+      if (typeof boolean === 'undefined') {      
+        let flatArr = arr.reduce((a,b) => a.concat(Array.isArray(b) ? this.flatten(b) : b), [])
+        return flatArr
+      } else {
+        return arr.flat()
+      }
+    },
+    uniq: function(arr, boolean, callback) {
+      if (typeof boolean === 'undefined' && typeof callback === 'undefined') {      
+        let returnArr = []
+        for (let i=0; i<arr.length-1; i++) {
+          if (returnArr.length === 0) {
+            returnArr.push(arr[i])
+          } else {
+            if (typeof returnArr.find(a => a === arr[i]) === 'undefined') {
+              returnArr.push(arr[i])
+            }
+          }
+        }
+        return returnArr
+      } else {
+        function fn(arr, callback) {
+          let col = []
+          for (let i = 0; i<arr.length; i++) {
+            col.push({key: arr[i], value: callback(arr[i])})
+          }
+          return col
+        }
+        let objs = fn(arr, callback)
+        
+        function sort(objs) {
+          let newObjArr = []
+          for (const obj of objs) {
+            if (newObjArr === 0) {
+              newObjArr.push(obj)
+            } else {
+              if (typeof newObjArr.find(a => a.value === obj.value) === 'undefined') {
+                newObjArr.push(obj)
+              }
+            }
+          }
+          return newObjArr
+        }
+        let ret = sort(objs).map(a => a.key)
+        return ret
+      }
+    },
+    keys: function(obj) {
+      let keys = []
+      for (const prop in obj) {
+        keys.push(prop)
+      }
+      return keys
+    },
+    values: function(obj) {
+      let values = []
+      for (const prop in obj) {
+        values.push(obj[prop])
+      }
+      return values
+    },
+    functions: function(fi) {
+      let fn = []
+      for (const obj in fi) {
+        if (typeof fi[obj] !== 'string') {
+          fn.push(obj)
+        }
+      }
+      return fn
     }
   }
 })()
 
 fi.libraryMethod()
 
-
-let objs = {
-  '1': 0.8414709848078965,
-  '2': 0.9092974268256817,
-  '3': 0.1411200080598672,
-  '4': -0.7568024953079282,
-  '5': -0.9589242746631385,
-  '6': -0.27941549819892586
-}
-function sortObj(objs) {
-  newObj = []
-  for (const prop in objs) {
-    newObj.push({key:prop, value: objs[prop]})
-  }
-  newObj.sort((a,b) => a.value - b.value)
-  console.log(newOjb[0].value)
-}
-
-sortObj(objs)
-
-
+ 
