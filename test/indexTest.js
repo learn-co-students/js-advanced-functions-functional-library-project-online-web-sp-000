@@ -150,7 +150,6 @@ describe('index.js', function () {
 
   describe('last', function () {
     const testArr = unmodifiedTestArr.slice()
-
     it('returns the last element of the collection', function () {
       expect(fi.last(testArr)).to.equal(4)
     })
