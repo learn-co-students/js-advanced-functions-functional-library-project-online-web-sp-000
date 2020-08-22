@@ -194,15 +194,17 @@ values: function(object){
 },
 
 functions: function(object){
- 
- for (let i = 0; i < object.length; i++){
-   arr = [];
-  if (typeof Object.keys(object[i]) === "function"){
-    arr.push(object[i]);
+  let arr = [];
+ for (const property  in object){
+  
+  if (typeof object[property] === "function"){
+    arr.push(property);
   }
-  return  arr;
+  
  
  }
+ console.log(arr.sort())
+ return  arr.sort();
  
 }
 
