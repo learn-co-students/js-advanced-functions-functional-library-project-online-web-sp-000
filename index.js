@@ -196,14 +196,12 @@ values: function(object){
 functions: function(object){
  
  for (let i = 0; i < object.length; i++){
-   let func = ["compact", "each", "filter", "find", "first", "functions", "last", "map", "reduce", "size", "sortBy"]
    arr = [];
- for (let i = 0; i < func.length; i++){
-  if (typeof Object.keys(object[i]) === func[i] ){
+  if (typeof Object.keys(object[i]) === "function"){
     arr.push(object[i]);
   }
   return  arr;
- }
+ 
  }
  
 }
