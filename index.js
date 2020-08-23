@@ -4,11 +4,11 @@ const fi = (function () {
       return "Start by reading https://medium.com/javascript-scene/master-the-javascript-interview-what-is-functional-programming-7f218c68b3a0";
     },
 
-    each: function (collection, alert) {
+    each: function (collection, callback) {
       const newCollection = Object.values(collection);
 
       for (let i = 0; i < newCollection.length; i++) {
-        alert(newCollection[i]);
+        callback(newCollection[i]);
       }
 
       return collection;
@@ -44,9 +44,7 @@ const fi = (function () {
 
     find: function (collection, callback) {
       for (let i = 0; i < collection.length; i++) {
-        if (!!callback(collection[i])) {
-          return collection[i];
-        }
+        if (!!callback(collection[i])) return collection[i];
       }
 
       return undefined;
@@ -56,9 +54,7 @@ const fi = (function () {
       const foundElements = [];
 
       for (let i = 0; i < collection.length; i++) {
-        if (!!callback(collection[i])) {
-          foundElements.push(collection[i]);
-        }
+        if (!!callback(collection[i])) foundElements.push(collection[i]);
       }
 
       return foundElements;
@@ -70,18 +66,14 @@ const fi = (function () {
       return collectionValues.length;
     },
 
-    first: function (array, n) {
-      n = !!n ? n : 1;
-      const elements = array.slice(0, n);
-
-      return this.size(elements) > 1 ? elements : elements[0];
+    first: function (array, n = null) {
+      return n ? array.slice(0, n) : array[0];
     },
 
-    last: function (array, n) {
-      n = !!n ? -n : -1;
-      const elements = array.slice(n);
-
-      return this.size(elements) > 1 ? elements : elements[0];
+    last: function (array, n = null) {
+      return n
+        ? array.slice(array.length - n, array.length)
+        : array[array.length - 1];
     },
 
     compact: function (array) {
