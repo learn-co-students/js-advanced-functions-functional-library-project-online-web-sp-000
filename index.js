@@ -129,9 +129,19 @@ const fi = (function() {
      return finalArray;
     },
 
-    functions: function() {
-
+    uniq: function(array, isSorted, callback) {
+      let uniqArray = []
+      for (const element of array) {
+        if (!uniqArray.includes(element)) {
+          uniqArray.push(element);
+        }
+      }
+      return uniqArray;
     },
+
+    // functions: function() {
+
+    // },
 
 
   }
