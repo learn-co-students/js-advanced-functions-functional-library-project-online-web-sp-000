@@ -129,15 +129,28 @@ const fi = (function() {
      return finalArray;
     },
 
+
+
     uniq: function(array, isSorted, callback) {
-      let uniqArray = []
+      const uniqArray = []
+      if (!callback) {
+        for (const element of array) {
+          if (!uniqArray.includes(element)) {
+            uniqArray.push(element);
+          }
+        }
+      } else {
+      const seenArray = []
       for (const element of array) {
-        if (!uniqArray.includes(element)) {
+        const value = callback(element);
+        if (!seenArray.includes(value)) {
+          seenArray.push(value);
           uniqArray.push(element);
         }
-      }
+      } 
+    }
       return uniqArray;
-    },
+     },
 
     // functions: function() {
 
