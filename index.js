@@ -152,10 +152,44 @@ const fi = (function() {
       return uniqArray;
      },
 
-    // functions: function() {
+  keys: function(object) {
+    const newArray = [];
+    for (const key in object) {
+      newArray.push(key);
+    }
+    return newArray;
+  },
 
-    // },
+  values: function(object) {
+    const newArray = [];
+    for (const key in object) {
+      newArray.push(object[key]);
+    }
+    return newArray;
+  },
 
+  functions: function(object) {
+    const newArray = [];
+    for (const key in object) {
+      if (typeof object[key] === 'function') {
+        newArray.push(key);
+      }
+    }
+    return newArray.sort();
+  },
+
+flatten: function(array, shallow) {
+  if (shallow) {
+    return array.reduce((flat, val) => flat.concat(val), []);
+  } else {
+    let finalArray = array;
+    while (finalArray.find(element => Array.isArray(element))) {
+      finalArray = finalArray.reduce((flat, val) => flat.concat(val), []);
+    }
+    console.log(finalArray);
+    return finalArray;
+  }
+},
 
   }
 })()
