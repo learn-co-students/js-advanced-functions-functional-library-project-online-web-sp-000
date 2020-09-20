@@ -5,6 +5,9 @@ const fi = (function() {
     },
 
   
+    //iterates over collection of elements
+    //passing each element to a callback function
+    //callback is called with 3 args, element index and collection 
     each: function(collection, callback) {
 
         let dub = (collection instanceof Array) ? collection.split() : Object.values(collection);
@@ -17,7 +20,7 @@ const fi = (function() {
         return collection;
     },
 
-
+//produces new array of values 
     map: function(collection, callback) {
 
         if (!(collection instanceof Array)) {
@@ -33,7 +36,7 @@ const fi = (function() {
         return newCollection;
     },
 
-
+//boils down a collection of values to a single value 
     reduce: function(c=[], callback = () => {}, accumulator) {
         let collection = c.slice(0)
 
@@ -49,6 +52,7 @@ const fi = (function() {
         return accumulator;
     },
 
+    //looks through each val in the collection and reutns the first one that passes the test
     find: function(collection, callback) {
       if (!(collection instanceof Array))
         collection = Object.values(collection)
@@ -59,6 +63,7 @@ const fi = (function() {
       return undefined
     },
 
+    //returns an array of all values that pass the test 
     filter: function(collection, callback) {
         if (!(collection instanceof Array)) {
             collection = Object.values(collection)
@@ -72,25 +77,31 @@ const fi = (function() {
         return newCollection
     },
 
+    //returns number of values in the collection
     size: function(collection) {
         return (collection instanceof Array) ? collection.length : Object.keys(collection).length
     },
 
     
+    //returns first element in the array 
     first: function(collection, stop=false) {
         return (stop) ? collection.slice(0, stop) : collection[0]
     },
 
+    //returns last ele in the array
     last: function(collection, start=false) {
         return (start) ? collection.slice(collection.length-start, collection.length) : collection[collection.length-1]
     },
 
+    //returns copy of the array w all falsy values removed 
     compact: function(collection) {
         const notGood = new Set([false, null, 0, "", undefined, NaN])
 
         return collection.filter(e => !notGood.has(e))
     },
 
+
+    //returns sorted copy of an array ascending order by results 
     sortBy: function(collection, callback) {
         const newArray = [...collection];
 
@@ -99,12 +110,14 @@ const fi = (function() {
         })
     },
 
+    //
     unpack: function(receiver, array) {
         for (let value of array) {
             receiver.push(value);
         }
     },
 
+    //correctly flattens a nested array [[]]
     flatten: function(collection, shallow, newArray=[]) {
         if (!Array.isArray(collection)) return newArray.push(collection)
 
@@ -120,6 +133,7 @@ const fi = (function() {
         return newArray
     },
 
+    //produces a duplicate free version of the array using ===
     uniqSorted: function(collection, iteratee) {
         const sorted = [collection[0]]
 
@@ -152,6 +166,7 @@ const fi = (function() {
         }
     },
 
+    //retrieves all names of the objects own enumerable properties 
     keys: function(obj) {
         const keys = []
 
@@ -162,6 +177,7 @@ const fi = (function() {
         return keys
     },
 
+    //returns all values of objects own properties 
     values: function(obj) {
         const values = []
 
@@ -175,7 +191,8 @@ const fi = (function() {
 
     },
 
-    functions: function(object) {
+    //returns collection that is sorted of names of every function in an object (compact, each, filter, find, first, functions, last, map,reduce,size,sortby)
+  functions: function(object) {
         const functionNames = []
 
         for (let key in object) {
