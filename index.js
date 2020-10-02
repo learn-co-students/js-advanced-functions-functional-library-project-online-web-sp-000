@@ -183,41 +183,7 @@ const fi = (function() {
 
       return current
 
-      
-
-      // function nest(array, currentArray) {
-      //   if (Array.isArray(array[0])) {
-      //     nest(array[0], current)
-      //   } else {
-          
-      //     retArray.push(array[0])
-      //     currentArray[0].shift()
-      //     if (currentArray[0].length === 0) {
-      //       current = currentArray.slice(1, currentArray.length)
-      //     } else {
-      //       current = [currentArray[0], currentArray.slice(1, currentArray.length)]
-      //     }
-          
-      //     if (Array.isArray(current[0])) {
-      //       nest(current[0], current)
-      //     }
-      //   }
-      // }
-      
-      // while (current) {
-      //   if (typeof current[0] === 'number') {
-      //     retArray.push(current[0])
-      //     next = current.slice(1, current.length)
-      //     current = next
-      //   } else  {
-      //     nest(current)
-      //   }
-      // }
-
-
-
-
-
+ 
     },
 
     uniq: function(array, isSorted = false, callback) {
