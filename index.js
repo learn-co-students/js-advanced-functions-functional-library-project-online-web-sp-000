@@ -106,6 +106,13 @@ const fi = (function() {
     },   
 
 
+    sortBy: function(givenCollection, callback){
+
+      const sortedCollection = givenCollection.sort(callback)
+
+      return sortedCollection
+    },   
+
 
     functions: function() {
 
