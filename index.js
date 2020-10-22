@@ -73,17 +73,38 @@ const fi = (function() {
 
     },  
 
-    first: function(givenCollection){
+    first: function(givenCollection, optionalArg=0){
 
-      return givenCollection[0]
+      if (optionalArg===0){
+        return givenCollection[0]
+      } else {
+        return givenCollection.slice(0, optionalArg)
+      }
+
+    }, 
+
+    last: function(givenCollection, optionalArg=0){
+
+      if (optionalArg===0){
+        return givenCollection[givenCollection.length - 1]
+      } else {
+        return givenCollection.slice(-optionalArg)
+      }
 
     }, 
 
-    last: function(givenCollection){
 
-      return givenCollection[givenCollection.length - 1]
+    compact: function(givenCollection){
 
-    }, 
+      const newCollection = []
+      for (const v of Object.values(givenCollection)){
+        if (v){
+          newCollection.push(v)
+        }
+      }
+      return newCollection
+    },   
+
 
 
     functions: function() {
