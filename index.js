@@ -108,7 +108,7 @@ const fi = (function() {
 
     sortBy: function(givenCollection, callback){
 
-      const newCollection = givenCollection
+      const newCollection = [...givenCollection]
 
       return newCollection.sort(function(a, b) {return callback(a) - callback(b)})
 
