@@ -45,6 +45,47 @@ const fi = (function() {
 
     },
 
+    find: function(givenCollection, callback) {
+
+      for (const v of Object.values(givenCollection)){
+        if (callback(v)){
+          return v
+        }
+      }
+    },
+
+
+    filter: function(givenCollection, callback) {
+
+      const foundItems = []
+      for (const v of Object.values(givenCollection)){
+        if (callback(v)){
+          foundItems.push(v)
+        }
+      }
+      return foundItems
+    },
+
+
+    size: function(givenCollection){
+
+      return (givenCollection instanceof Array) ? givenCollection.length : Object.keys(givenCollection).length
+
+    },  
+
+    first: function(givenCollection){
+
+      return givenCollection[0]
+
+    }, 
+
+    last: function(givenCollection){
+
+      return givenCollection[givenCollection.length - 1]
+
+    }, 
+
+
     functions: function() {
 
     },
