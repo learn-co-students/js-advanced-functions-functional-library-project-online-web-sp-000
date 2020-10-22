@@ -14,11 +14,34 @@ const fi = (function() {
 
     },
 
-    map: function() {
+    map: function(givenCollection){
+
+      const callback = (x) => (x * 3)
+      const newCollection = []
+
+      for (let v of Object.values(givenCollection)){
+          newCollection.push(callback(v))
+      }
+      
+      return newCollection
 
     },
 
-    reduce: function() {
+    reduce: function(givenCollection, callback, initialValue=0) {
+
+      if (initialValue === 0){
+        var accum = givenCollection[0]
+        var arrayOfValues = givenCollection.slice(1)
+      } else {
+        var accum = initialValue
+        var arrayOfValues = givenCollection
+      }
+      
+      for (let v of Object.values(arrayOfValues)){
+        accum = callback(accum, v, arrayOfValues)
+      }
+
+      return accum
 
     },
 
