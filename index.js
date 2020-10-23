@@ -128,18 +128,27 @@ const fi = (function() {
     },
 
 
-    uniq: function(givenCollection, sorted, iteratee=false){
+    uniq: function(givenCollection, isSorted, iteratee) {
 
-      if (iteratee){
-        let operatedArray = givenCollection.map(element => iteratee(element))
-        let newSet = new Set(operatedArray)
-        let uniqArray = [...newSet]
-        return uniqArray        
-      } else {
-        let newSet = new Set(givenCollection)
-        let uniqArray = [...newSet]
+      if (iteratee) {
+        const uniqArray = []  
+        const valueArray = []
+        for (const element of givenCollection) {
+          const calculatedValue = iteratee(element)
+          if (!valueArray.includes(calculatedValue)) {
+            valueArray.push(calculatedValue)
+            uniqArray.push(element)
+          }
+        } 
         return uniqArray
-      }
+
+      }  else {
+
+        let newSet = new Set(givenCollection)
+        const uniqArray = [...newSet]
+        return uniqArray        
+      }  
+
     },
 
     keys: function(givenCollection){
