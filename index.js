@@ -168,7 +168,13 @@ const fi = (function() {
 
 
 
-    functions: function() {
+    functions: function(givenCollection) {
+
+      const getMethods = (obj) => Object.getOwnPropertyNames(obj).filter(item => typeof obj[item] === 'function')   
+
+      let sortedFunctionNames = getMethods(givenCollection).sort()
+
+      return sortedFunctionNames
 
     },
 
