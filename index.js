@@ -115,6 +115,59 @@ const fi = (function() {
     },   
 
 
+    flatten: function(givenCollection, singleLevel=false){
+ 
+      let flattened
+      if (singleLevel){
+        flattened = [].concat.apply([], givenCollection);
+      } else {
+        flattened = givenCollection.flat(Infinity);
+      }
+
+      return flattened
+    },
+
+
+    uniq: function(givenCollection, iteratee=false){
+
+      if (iteratee){
+        let operatedArray = givenCollection.map(element => element % iteratee)
+        let newSet = new Set(operatedArray)
+        let uniqArray = [...newSet]
+        return uniqArray        
+      } else {
+        let newSet = new Set(givenCollection)
+        let uniqArray = [...newSet]
+        return uniqArray
+      }
+    },
+
+    keys: function(givenCollection){
+
+      let keys = []
+
+      for (const [k, v] of Object.entries(givenCollection)){
+        keys.push(k)
+      }
+      return keys
+
+    },
+
+
+    values: function(givenCollection){
+
+      let values = []
+
+      for (const [k, v] of Object.entries(givenCollection)){
+        values.push(v)
+      }
+      return values
+
+
+    },
+
+
+
     functions: function() {
 
     },
