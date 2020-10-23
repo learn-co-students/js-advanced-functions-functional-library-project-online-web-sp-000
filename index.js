@@ -128,10 +128,10 @@ const fi = (function() {
     },
 
 
-    uniq: function(givenCollection, iteratee=false){
+    uniq: function(givenCollection, sorted, iteratee=false){
 
       if (iteratee){
-        let operatedArray = givenCollection.map(element => element % iteratee)
+        let operatedArray = givenCollection.map(element => iteratee(element))
         let newSet = new Set(operatedArray)
         let uniqArray = [...newSet]
         return uniqArray        
