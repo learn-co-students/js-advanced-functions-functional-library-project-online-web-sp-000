@@ -1,3 +1,5 @@
+
+//wrapping library code is called a module pattern
 const fi = (function() {
   return {
     libraryMethod: function() {
