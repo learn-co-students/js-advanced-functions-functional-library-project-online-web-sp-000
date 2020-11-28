@@ -70,6 +70,11 @@ each: function(collection, iteratee) {
     return newArr
  }
 
+ size: function(collection) {
+     return (collection instanceof Array) ? collection.length : Object.keys(collection).length
+   },
+
+
   }
 })()
 
