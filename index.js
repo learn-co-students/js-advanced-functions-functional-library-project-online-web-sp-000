@@ -78,6 +78,24 @@ first: function(collection, stop = false) {
   return (stop) ? collection.slice(0, stop) : collection[0]
 },
 
+last: function(collection, start = false){
+  return (start) ? collection.slice(collection.length-start, collection.length) :
+  collection[collection.length-1]
+},
+
+//has() returns a boolean indicicating whether an element with the specified key
+//exits or not
+compact: function(collection) {
+  const falseyValues = new Set([false, null, 0, "", undefined, NaN])
+  return collection.filter(e => !falseyValues.has(e))
+},
+
+sortBy: function(collection, callback) {
+  const newArr = [...collection]
+  return newArr.sort(function(a, b){
+    return callback(a) - callback(b)
+  })
+},
 
   }
 })()
