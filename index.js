@@ -68,11 +68,15 @@ each: function(collection, iteratee) {
     if (predicate(collection[i])) newArr.push(collection[i])
 
     return newArr
- }
+ },
 
  size: function(collection) {
      return (collection instanceof Array) ? collection.length : Object.keys(collection).length
    },
+
+first: function(collection, stop = false) {
+  return (stop) ? collection.slice(0, stop) : collection[0]
+},
 
 
   }
