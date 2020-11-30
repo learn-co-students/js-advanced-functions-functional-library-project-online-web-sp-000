@@ -135,7 +135,6 @@ const fi = (function() {
     },
 
     keys: function(obj) {
-      // Using for loop
       const keys = []
       for (let key in obj){
         keys.push(key)
@@ -144,15 +143,11 @@ const fi = (function() {
     },
 
     values: function(obj) {
-      // Using for loop
       const values = []
       for (let key in obj){
         values.push(obj[key])
       }
       return values
-
-      // Using the custom 'map' method from above
-      // return this.map(obj, (value) => value)
 
     },
 
