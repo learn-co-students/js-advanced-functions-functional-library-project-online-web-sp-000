@@ -1,0 +1,22 @@
+let array = [1, 1, 2, 3, 2, 4, 5, 6, 1]
+array.map(function(num){
+    return num*3
+})
+let newArray= array.sort()
+  
+let uniqueArray = [...new Set(newArray)]
+
+function sort(arr){
+    let newArray= arr.filter( function( item, index, inputArray ) {
+        return inputArray.indexOf(item) == index})
+        return newArray
+        }
+
+
+
+
+
+
+
+
+         
