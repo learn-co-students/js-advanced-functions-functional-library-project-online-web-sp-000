@@ -37,14 +37,30 @@ const fi = (function() {
         }
         return acc
     },
+    find: function(collection, predicate) {
+        for (let i = 0; i < collection.length; i++) {
+            if (predicate(collection[i])) {
+                return collection[i]
+            }
+        }
+        return undefined
+    },
 
-   
-
-
-
-    functions: function() {
+    filter: function(collection,predicate){
+        let newArray = []
+      
+        for (let i = 0; i < collection.length; i++) {
+            if (predicate(collection[i])) {
+                newArray.push(collection[i])
+            }    
+        }
+        return newArray
 
     },
+
+    size: function(collection){
+        return (collection instanceof Array) ? collection.length : Object.keys(collection).length
+    }
 
 
   }
