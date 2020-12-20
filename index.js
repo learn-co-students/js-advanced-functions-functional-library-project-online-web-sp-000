@@ -60,6 +60,24 @@ const fi = (function() {
 
     size: function(collection){
         return (collection instanceof Array) ? collection.length : Object.keys(collection).length
+    },
+
+    first: function(array, n = false){
+        return (n) ? array.slice(0, n) : array[0]
+    },
+
+    last: function(array, n = false){
+        return (n) ? array.slice(n * -1) : array[array.length - 1]
+    },
+
+    compact: function(array){
+        let newArray = []
+        for (let i = 0; i < array.length; i++) {
+            if (Boolean(array[i])) {
+                newArray.push(array[i])
+            }          
+        }
+        return newArray
     }
 
 
