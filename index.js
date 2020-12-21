@@ -78,10 +78,77 @@ const fi = (function() {
             }          
         }
         return newArray
+    },
+
+    sortBy: function(array, callback){
+        //handle arrays of integer AND strings
+        //assign the original array to newArray
+        //use JS sort function on newArray
+        //return newArray
+        //I have to send sort my own function so it sorts integers
+        //which are returned as values from its callback function
+        let newArray = array.slice(0)
+        return newArray.sort(function(a, b){
+            return callback(a) - callback(b) // ascending order
+        })
+        
+    },
+
+    flatten: function(array, shallow){
+        if (shallow) {
+            return array.flat()
+            
+        } else {
+            return array.flat(Infinity)
+        }
+    },
+
+    uniq: function(array, isSorted, callback) {
+         
+        let newArray = array.slice(0)
+
+        if (callback) {
+            let uniqInputArray = new Set()
+            let returnValueArray = new Set()
+
+            for (let value of newArray) {
+                let newValue = callback(value)
+                if (!returnValueArray.has(newValue)) {
+                    returnValueArray.add(newValue)
+                    uniqInputArray.add(value)
+                }
+            }
+        return (Array.from(uniqInputArray))   
+        } else if (isSorted) {
+            return newArray.filter((value, index, array) => array.indexOf(value) === index )
+        } else {
+            return newArray.filter((value, index, array) => array.indexOf(value) === index )
+        }
+    },
+
+    keys: function(object) {
+        return Object.keys(object)
+    },
+
+    values: function(object) {
+        return Object.values(object)
+    },
+
+    functions: function(object) {
+        let newArray = []
+        //iterate over the object to see if the value of the keys is of type function
+        // if true, push the value onto newArray
+        // return newArray.sort()
+        for (let key in object) {
+            if (typeof (object[key]) === "function") {
+                newArray.push(key)
+            }
+        }
+        return newArray.sort()
     }
+    
 
-
-  }
+    }
 })()
 
 fi.libraryMethod()
