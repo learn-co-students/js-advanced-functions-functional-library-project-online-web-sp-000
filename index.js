@@ -38,7 +38,7 @@ const fi = (function() {
     find: function(arr, test) {
       let result = undefined;
       for (let element in arr) {
-          test(element)
+          test(arr[element])
       };
       return result;
     },
@@ -72,19 +72,36 @@ const fi = (function() {
       }
     },
 
-    compact: function() {
-
+    compact: function(array) {
+      let result = []
+      for (let e in array) {
+        if (!!array[e] === true) {
+          result.push(array[e])
+        }
+      }
+      return result
     },
 
-    sortBy: function() {
-
+    sortBy: function(array, callback) {
+      let result = array.slice()
+      // for (let e in result) {
+      //   result[e] = callback(result[e])
+      //   console.log(result[e])
+      // }
+      return result.sort( function(a, b) {return callback(a) - callback(b)} )
     },
 
-    flatten: function() {
-
+    flatten: function(array, bool) {
+      if (bool) {
+        return array.reduce( (acc, element) => {return acc.concat(element)}, [])
+      } else {
+        return array.reduce((acc, element) => {
+          return acc.concat( Array.isArray(element) ? fi.flatten(element) : element)
+        }, [])
+    }
     },
 
-    uniq: function() {
+    uniq: function(array ) {
 
     },
 
@@ -109,7 +126,6 @@ const fi = (function() {
       for (let element in obj) {
         if (typeof obj[element] === "function") {
           result.push(element)
-          console.log(element)
         }
       }
       return result.sort();
