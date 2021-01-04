@@ -35,16 +35,23 @@ const fi = (function() {
       return memo
     },
 
-    find: function(arr, test) {
-      let result = undefined;
-      for (let element in arr) {
-          test(arr[element])
+    find: function(array, test) {
+      for (let e in array) {
+        if (test(array[e])) {
+          let result = array[e]
+          return result
+        }
       };
-      return result;
     },
 
-    filter: function() {
-
+    filter: function(array, test) {
+      let result = []
+      for (let e in array) {
+        if (test(array[e])) {
+          result.push(array[e])
+        }
+      }
+      return result
     },
 
     size: function(obj) {
@@ -61,7 +68,6 @@ const fi = (function() {
       } else {
         return obj[0]
       }
-      
     },
 
     last: function(obj, n) {
@@ -84,10 +90,6 @@ const fi = (function() {
 
     sortBy: function(array, callback) {
       let result = array.slice()
-      // for (let e in result) {
-      //   result[e] = callback(result[e])
-      //   console.log(result[e])
-      // }
       return result.sort( function(a, b) {return callback(a) - callback(b)} )
     },
 
@@ -101,8 +103,32 @@ const fi = (function() {
     }
     },
 
-    uniq: function(array ) {
+    uniq: function(array, issorted, callback) {
+      let result = []
+      
+      function findCBGenerator(target) {
+        return (function(currEl) { return target === currEl })
+      }
 
+      if (callback) {
+        let transformed = []
+        for (let e in array) {
+          let element = callback(array[e])
+          if ( fi.find(transformed, findCBGenerator(element)) !== undefined ) {
+          } else {
+            transformed.push(element)
+            result.push(array[e])
+          }
+        }
+        return result
+      } else {
+        for (let e in array) {
+          if ( !fi.find(result, findCBGenerator(array[e])) ) {
+            result.push(array[e])
+          }
+        }
+        return result
+      }
     },
 
     keys: function(obj) {
