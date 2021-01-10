@@ -48,6 +48,18 @@ const fi = (function() {
             return element
         },
 
+        filter: function(collection, predicate) {
+            let passingValues = []
+            let passesTest
+            for (let i = 0; i < collection.length; i++) {
+                passesTest = predicate(collection[i])
+                if (passesTest) {
+                    passingValues.push(collection[i])
+                }
+            }
+            return passingValues
+        },
+
         functions: function() {
 
         },
