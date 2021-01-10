@@ -60,6 +60,15 @@ const fi = (function() {
             return passingValues
         },
 
+        size: function(collection) {
+            // Return the number of values in the collection.
+            let numValues = 0
+            for (const value in collection) {
+                numValues++
+            }
+            return numValues
+        },
+
         functions: function() {
 
         },
