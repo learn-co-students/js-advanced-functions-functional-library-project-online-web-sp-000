@@ -61,12 +61,38 @@ const fi = (function() {
         },
 
         size: function(collection) {
-            // Return the number of values in the collection.
             let numValues = 0
             for (const value in collection) {
                 numValues++
             }
             return numValues
+        },
+
+        first: function(array, n) {
+            // Returns the first element of an array. 
+            // Passing n will return the first n elements 
+            // of the array.
+            if (n) {
+                let firstNelements = []
+                for (let i = 0; i < n; i++) {
+                    firstNelements.push(array[i])
+                }
+                return firstNelements
+            }
+            return array[0]
+        },
+
+        last: function(array, n) {
+            if (n) {
+                let lastNelements = []
+                let arrCopy = array.reverse()
+
+                for (let i = 0; i < n; i++) {
+                    lastNelements.push(arrCopy[i])
+                }
+                return lastNelements.reverse()
+            }
+            return array[array.length - 1]
         },
 
         functions: function() {
