@@ -96,21 +96,6 @@ const fi = (function() {
         },
 
         compact: function(array) {
-            // Returns a copy of the **array** with all falsy values removed. In JavaScript,
-            // _false_,
-            // _null_,
-            // _0_,
-            // _ ""
-            // _,
-            // _undefined_ and _NaN_ are all falsy.
-            // const copyArray = [...array]
-            // for (let i = 0; i < copyArray.length; i++) {
-            //     if (!copyArray[i]) {
-            //         copyArray.splice(i, 1)
-            //         i--
-            //     }
-            // }
-            // return copyArray
             const copyArray = [...array]
             for (let i = 0; i < copyArray.length; i++) {
                 if (!copyArray[i]) {
@@ -119,6 +104,11 @@ const fi = (function() {
                 }
             }
             return copyArray
+        },
+
+        sortBy: function(array, callback) {
+            const sortedCopyArray = [...array]
+            return sortedCopyArray.sort((val, nextVal) => callback(val) - callback(nextVal))
         },
 
         functions: function() {
