@@ -1,29 +1,14 @@
-    let testObj1 = [1, 2, 3, 4];
-    let callback1 = x => (x * 3);
+function arraysEqual(arrA, arrB) {
+  if (arrA.length !== arrB.length) return false
+  for (let idx = 0; idx < arrA.length; idx++) {
+    if (arrA[idx] !== arrB[idx]) {
 
-    const testObj2 = {one: 1, two: 2, three: 3, four: 4}
-    const resultObj2 = {one: 3, two: 6, three: 9, four: 12}
-
-    // const arrResult1 = fi.map(testObj1, callback1);
-    // let m = arraysEqual([3, 6, 9, 12], arrResult1);
-
-    const testArr = testObj1.slice() // arr is [1, 2, 3, 4]
-    const callback = (acc, val, collection) => (acc + (val * 3))
-
-    function arraysEqual(arrA, arrB) {
-      if (arrA.length !== arrB.length) return false
-      for (let idx = 0; idx < arrA.length; idx++) {
-        if (arrA[idx] !== arrB[idx]) {
-          
-          if (isNaN(arrA[idx]) && isNaN(arrB[idx])) continue
-          return false
-        }
-      }
-      // console.log(arrA);
-      // console.log(arrB);
-      return true
+      if (isNaN(arrA[idx]) && isNaN(arrB[idx])) continue
+      return false
     }
-
+  }
+  return true
+}
 const fi = (function() {
   return {
     libraryMethod: function() {
@@ -131,14 +116,58 @@ const fi = (function() {
         }
       return (set == 1) ? r[0] : r ;
     },
-    compact: function(array) {
+    compact: function(collection) {
+      let mm = Object.assign([], collection);
+      if (mm instanceof Array) {
+        for (let i = 0, len = mm.length; i < len; i++) {
+          if (i >= mm.length) { break; }
 
+          while (!mm[i]) {
+            if (i >= mm.length) { break; }
+            mm.splice(i, 1)
+          };
+        }
+      } 
+      return mm;
     },
+
+    
     sortBy: function(array, callback) {
-
+      let r = [];
+      let copy = Object.assign([], array);
+      while (copy.length > 0) {
+        let lowest = callback(copy[0]);
+        let rememberIdx = 0;
+        for (let i = 0, len = copy.length; i < len; i++) {
+          if (lowest > callback(copy[i])) { 
+              lowest = callback(copy[i]);
+              rememberIdx = i;
+          }
+        }
+      r.push(copy.splice(rememberIdx, 1)[0]);
+      }
+      return r;
     },
+    // fi.flatten(nestedArr1, []);
     flatten: function(array, [shallow]) {
+      let nested = true;
+      while (nested) {
 
+        for (let i = 0, len = array.length; i <=len; i++) {
+          if (i == array.length) {nested = false; }
+          if (Array.isArray(array[i])) {
+            let tmp = array.splice(i, 1);
+            let z = [];
+            for (let x = 0; x < tmp[0].length; x++) {
+              console.log(`i: ${i}, z: ${z}, x:${x}`);
+              z.push(tmp[0][x]);
+              array.splice(i+x, 0, tmp[0][x]);
+            };
+            i = 0;
+          }
+        }
+      }
+      return array;
     },
     uniq: function(array, [isSorted], [callback]) {
 
@@ -159,5 +188,4 @@ const fi = (function() {
 
 fi.libraryMethod()
 
-const objResult = fi.map(testObj2, callback1)
-let m = arraysEqual([3, 6, 9, 12], objResult)
+const nestedArr1 = [1, [2, 3], [[4, 5], 6, [7, [8, 9]]]];
