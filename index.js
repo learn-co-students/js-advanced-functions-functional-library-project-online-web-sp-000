@@ -135,7 +135,7 @@ const fi = (function() {
             // when iteratee(callback) is applied
             if (callback) {
                 for (let i = 0; i < array.length; i++) {
-                    if (callback(array[i]) && isUnique(array, array[i], i)) {
+                    if (isUnique(array, callback(array[i]), i)) {
                         uniqueValues.push(array[i])
                     }
                 }
