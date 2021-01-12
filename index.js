@@ -83,19 +83,53 @@ const fi = (function() {
     },
 
     find: function(collection, predicate) {
-
+      if(Array.isArray(collection)) {
+        for(let x of collection) {
+          if (predicate(x)) {
+            return x;
+          }
+        }
+      }
     },
+
     filter: function(collection, predicate) {
-
+        let r = [];
+        for(let x of collection) {
+          if (predicate(x)) {
+            r.push(x);
+          }
+        }
+        return r;
     },
+
     size: function(collection) {
-
+        let r = 0;
+        if(Array.isArray(collection)) {
+          for(let x of collection) {
+              r++;
+            }
+        } else {
+          r = Object.keys(collection).length;
+        }
+        return r;
     },
-    first: function(array, [n]) {
 
+    first: function(array, set = 1) {
+      let r = [];
+      for(let x of array) {
+        if (r.length == set) { break; }
+        r.push(x);
+        }
+      return (set == 1) ? r[0] : r ;
     },
-    last: function(array, [n]) {
 
+    last: function(array, set = 1) {
+      let r = [];
+      for(let i = array.length - set; i < array.length; i++) {
+        if (r.length == set) { break; }
+        r.push(array[i]);
+        }
+      return (set == 1) ? r[0] : r ;
     },
     compact: function(array) {
 
