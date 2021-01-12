@@ -149,8 +149,10 @@ const fi = (function() {
       return r;
     },
     // fi.flatten(nestedArr1, []);
-    flatten: function(array, [shallow]) {
+    flatten: function(collection, [shallow]) {
+      shallow = true;
       let nested = true;
+      let array = Object.assign([], collection);
       while (nested) {
 
         for (let i = 0, len = array.length; i <=len; i++) {
@@ -159,7 +161,6 @@ const fi = (function() {
             let tmp = array.splice(i, 1);
             let z = [];
             for (let x = 0; x < tmp[0].length; x++) {
-              console.log(`i: ${i}, z: ${z}, x:${x}`);
               z.push(tmp[0][x]);
               array.splice(i+x, 0, tmp[0][x]);
             };
