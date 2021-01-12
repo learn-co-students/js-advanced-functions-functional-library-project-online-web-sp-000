@@ -148,28 +148,37 @@ const fi = (function() {
       }
       return r;
     },
-    // fi.flatten(nestedArr1, []);
-    flatten: function(collection, [shallow]) {
-      shallow = true;
+
+    flatten: function(collection, shallow = false) {
       let nested = true;
       let array = Object.assign([], collection);
-      while (nested) {
+      let i = 0;
 
-        for (let i = 0, len = array.length; i <=len; i++) {
-          if (i == array.length) {nested = false; }
+      while (nested) {
+        if (i >= array.length) { nested = false;}
+        for (let len = array.length; i <=len; i++) {
           if (Array.isArray(array[i])) {
             let tmp = array.splice(i, 1);
             let z = [];
             for (let x = 0; x < tmp[0].length; x++) {
               z.push(tmp[0][x]);
+              if (shallow){
+                if (i == array.length) { nested = false;}
+              }
               array.splice(i+x, 0, tmp[0][x]);
             };
-            i = 0;
+            if (shallow) { 
+              break;  
+            } else {
+              i = 0;
+            }
           }
         }
+        
       }
       return array;
     },
+
     uniq: function(array, [isSorted], [callback]) {
 
     },
