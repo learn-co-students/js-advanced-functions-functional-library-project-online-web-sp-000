@@ -156,8 +156,42 @@ const fi = (function() {
             return uniqueValues
         },
 
-        functions: function() {
+        keys: function(object) {
+            // Retrieve all the names of the object's 
+            // own enumerable properties.
+            let keys = []
+            for (const key in object) {
+                keys.push(key)
+            }
 
+            return keys 
+        },
+
+        values: function(object) {
+            // fi.values(object) Return all of the values 
+            // of the object's own properties.
+            let values = []
+            for (const key in object) {
+                values.push(object[key])
+            }
+            return values
+        },
+
+        functions: function(object) {
+            // returns a sorted collection of the names of 
+            // every method in an object
+            let functionNames= []
+            for (const functionName in object) {
+                // check if type is not a function
+                if (typeIsFunction(object[functionName])) {
+                    functionNames.push(functionName)
+                }
+            }
+
+            function typeIsFunction(functionToCheck) {
+                return typeof functionToCheck !== 'string'
+            }
+            return functionNames
         },
 
 
