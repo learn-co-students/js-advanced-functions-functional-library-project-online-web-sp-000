@@ -129,6 +129,33 @@ const fi = (function() {
             return flattenedArray
         },
 
+        uniq: function(array, isSorted = false, callback) {
+            let uniqueValues = []
+            
+            // when iteratee(callback) is applied
+            if (callback) {
+                for (let i = 0; i < array.length; i++) {
+                    if (callback(array[i]) && isUnique(array, array[i], i)) {
+                        uniqueValues.push(array[i])
+                    }
+                }
+                console.log(uniqueValues)
+            } else {
+                // iterate over array and add unique values
+                for (let i = 0; i < array.length; i++) {
+                    if (isUnique(array, array[i], i)) {
+                        uniqueValues.push(array[i])
+                    }
+                }
+            }
+            
+            // checks if value is first occuring
+            function isUnique(array, value, index) {
+                return array.indexOf(value) === index 
+            }
+            return uniqueValues
+        },
+
         functions: function() {
 
         },
