@@ -10,6 +10,11 @@ function arraysEqual(arrA, arrB) {
   return true
 }
 const fi = (function() {
+
+  function returnValue(x) {
+    return x;
+  };
+
   return {
     libraryMethod: function() {
       return 'Start by reading https://medium.com/javascript-scene/master-the-javascript-interview-what-is-functional-programming-7f218c68b3a0'
@@ -179,17 +184,60 @@ const fi = (function() {
       return array;
     },
 
-    uniq: function(array, [isSorted], [callback]) {
+    
+    uniq: function(array, isSorted, callback = returnValue)  {
+      
+      for (let i = 0, len = array.length; i <=len; i++) {
+        let a = array[i];
+        for (let x = 0, scan = array.length; x <=scan;x++) {
+          let b = array[x];
+          if ((a === undefined) && (b === undefined)) {break;}
+          // console.log(`call ${callback(a)}`);
+          // console.log(`call ${callback(b)}`);
 
+          if ((callback(a) == callback(b)) && (i != x)) {
+            
+
+            // console.log(`${a} and ${b} at position i:${i} and x: ${x} are equal`);
+            // console.log(`removing ${b} at position x: ${x}`);
+            array.splice(x, 1);
+            // console.log(`New Array: ${array}`);
+            // console.log('----');
+            x--;
+            // break;
+          }
+          // x++;
+        }
+      }
+      return array;
     },
+
     keys: function(object) {
-
+      let props = [];
+      for (const property in object) {
+        props.push(property);
+      }
+      return props;
     },
+
     values: function(object) {
-
+      let props = [];
+      for (const property in object) {
+        props.push(object[property]);
+      }
+      return props;
     },
-    functions: function(object) {
 
+    functions: function(object) {
+      let set = [];
+      for (const property in object) {
+        if (object[property] instanceof Function) {
+          set.push(property);
+        }
+      }
+      console.log(set);
+      set = set.sort();
+      return set;
     },
 
 
@@ -198,4 +246,10 @@ const fi = (function() {
 
 fi.libraryMethod()
 
-const nestedArr1 = [1, [2, 3], [[4, 5], 6, [7, [8, 9]]]];
+const testObject = {
+  a: "",
+  z: () => null,
+  p: "",
+  c: () => null,
+  k: () => null,
+}
