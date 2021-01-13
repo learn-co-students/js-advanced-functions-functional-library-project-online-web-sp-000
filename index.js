@@ -20,20 +20,18 @@ const fi = (function() {
             return newArray
         },
 
-        reduce: function(collection, callback, acc = 0) {
-            // Reduce boils down a collection of values into a single value. 
-            // Acc (short for accumulator) starts as the initial state of 
-            // the reduction, and with each successive step it should be 
-            // accumulate the return value of callback. The callback is passed 
-            // three arguments: the acc, the current value in our iteration 
-            // (the element in the array), and finally a reference to the entire 
-            // collection.
-            let returnVal = 0
-            collection.forEach(element => {
-                returnVal += callback(0, element, collection)
-            })
-            returnVal += acc
-            return returnVal
+        reduce: function(collection, callback = () => {}, acc) {
+            // let returnVal = 0
+            let tempCollection = collection.slice(0)
+            if (!acc) {
+                acc = tempCollection[0]
+                tempCollection = tempCollection.slice(1)
+            }
+            let tempLength = tempCollection.length
+            for (let i = 0; i < tempLength; i++) {
+                acc = callback(acc, tempCollection[i], collection)
+            }
+            return acc
         },
 
         find: function(collection, predicate) {
@@ -111,11 +109,88 @@ const fi = (function() {
             return sortedCopyArray.sort((val, nextVal) => callback(val) - callback(nextVal))
         },
 
-        functions: function() {
-
+        flatten: function(array, shallow = false) {
+            let flattenedArray = []
+            if (shallow) {
+                // flatten a single level
+                flattenedArray = flattenedArray.concat(...array)
+            } else {
+                do {
+                    let value = array.shift()
+                    if (Array.isArray(value)) {
+                        array = value.concat(array)
+                    } else {
+                        flattenedArray.push(value)
+                    }
+                } while (array.length)
+            }
+            return flattenedArray
         },
 
+        uniqSorted: function(collection, iteratee) {
+            const sorted = [collection[0]]
+            for (let idx = 1; idx < collection.length; idx++) {
+                if (sorted[idx - 1] !== collection[idx])
+                    sorted.push(collection[idx])
+            }
+            return sorted
+        },
 
+        uniq: function(collection, sorted = false, iteratee = false) {
+            if (sorted) {
+                return fi.uniqSorted(collection, iteratee)
+            } else if (!iteratee) {
+                return Array.from(new Set(collection))
+            } else {
+                const modifiedVals = new Set()
+                const uniqVals = new Set()
+                for (let val of collection) {
+                    const moddedVal = iteratee(val)
+                    if (!modifiedVals.has(moddedVal)) {
+                        modifiedVals.add(moddedVal)
+                        uniqVals.add(val)
+                    }
+                }
+                return Array.from(uniqVals)
+            }
+        },
+
+        keys: function(object) {
+            // Retrieve all the names of the object's 
+            // own enumerable properties.
+            let keys = []
+            for (const key in object) {
+                keys.push(key)
+            }
+            return keys
+        },
+
+        values: function(object) {
+            // fi.values(object) Return all of the values 
+            // of the object's own properties.
+            let values = []
+            for (const key in object) {
+                values.push(object[key])
+            }
+            return values
+        },
+
+        functions: function(object) {
+            // returns a sorted collection of the names of 
+            // every method in an object
+            let functionNames = []
+            for (const functionName in object) {
+                // check if type is not a function
+                if (typeIsFunction(object[functionName])) {
+                    functionNames.push(functionName)
+                }
+            }
+
+            function typeIsFunction(functionToCheck) {
+                return typeof functionToCheck !== 'string'
+            }
+            return functionNames
+        },
     }
 })()
 
