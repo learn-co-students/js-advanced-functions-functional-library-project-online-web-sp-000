@@ -68,13 +68,72 @@ const fi = (function() {
     },
 
     last: function(collection, n) {
-      if (n) {
-        return collection.slice((collection.length - n))
-      } else {return collection[-1]}
+      return n ? collection.slice((collection.length - n)) : collection[collection.length -1];
     },
 
-    functions: function() {
+    compact: function(collection) {
+      let result = []
+      for (const item of collection) {
+        if (!!item) {result.push(item)}
+      }
+      return result
+    },
 
+    sortBy: function(collection, callback) {
+      let result = [...collection];
+      return result.sort(function(a,b) {return callback(a) - callback(b)})
+    },
+
+    flatten: function(arr, shallow) {
+      let newArr = [];
+      if (!Array.isArray(arr)) {
+        return [arr]
+      } else if (!!shallow) {
+          for (const i of arr) {
+            (Array.isArray(i)) ? newArr = newArr.concat(i) : newArr.push(i);
+          }
+      } else {
+        for (const i of arr) {newArr = newArr.concat(fi.flatten(i))}
+      }
+      return newArr
+    },
+
+    uniq: function(array, sorted, callback) {
+      if (callback) {
+        let result = [];
+        let prev = []
+        for (const item of array) {
+          let cbRes = callback(item)
+          if (!prev.includes(cbRes)) {
+            result.push(item)
+            prev.push(cbRes)
+          }
+        }
+        return result
+      }
+      return Array.from(new Set(array))
+    },
+
+    keys: function(obj) {
+      let keys = [];
+      for (const key in obj) {keys.push(key)}
+      return keys
+    },
+
+    values: function(obj) {
+      let values = [];
+      for (const key in obj) {values.push(obj[key])}
+      return values
+
+    },
+
+
+    functions: function(obj) {
+      let funcKeys = [];
+      for (const i in obj) {
+        if (obj[i].name) { funcKeys.push(obj[i].name)}
+      }
+      return funcKeys
     },
 
 
