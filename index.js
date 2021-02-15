@@ -23,13 +23,47 @@ const fi = (function() {
       return newArr
     },
 
-    reduce: function() {
+    reduce: function(collection, callback, acc) {
 
+      if (!acc){
+        acc = collection[0]
+        collection = collection.slice(1)
+      }
+
+      for (let i = 0; i < collection.length; i++) {
+        acc = callback(acc, collection[i], collection)
+      }
+      return acc;
     },
 
-    functions: function() {
+    find: function(collection, predicate) {
+      if (!(collection instanceof Array)){
+        collection = Object.values(collection)
+      }
 
+      for (let i = 0; i < collection.length; i++) {
+        if (predicate(collection[i])) return collection[i]
+      }
+
+      return undefined
     },
+
+    filter: function(collection, predicate) {
+      const array = [];
+
+      if (!(collection instanceof Array)){
+        collection = Object.values(collection)
+      }
+
+      for (let i = 0; i < collection.length; i++) {
+        if (predicate(collection[i])) {
+        array.push(collection[i])
+        }
+      }
+      return array
+    },
+
+
 
 
   }
