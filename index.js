@@ -41,9 +41,59 @@ const fi = (function() {
 			return acc;
 		},
 
-    functions: function() {
+    find: function(collection, predicate) {
+      if (!(collection instanceof Array)) {
+        collection = Object.values(collection);
+      }
 
+      for (let i = 0; i < collection.length; i++) {
+        if (predicate(collection[i])) { return collection[i] }
+      }
+      return undefined;
     },
+
+    filter: function(collection, predicate) {
+      if (!(collection instanceof Array)) {
+        collection = Object.values(collection);
+      }
+      const newCollection = [];
+
+      for (let i = 0; i < collection.length; i++) {
+        if(predicate(collection[i])) { 
+          newCollection.push(collection[i]) 
+        };
+      }
+      return newCollection;
+    },
+
+    size: function(collection) {
+      if (!(collection instanceof Array)) {
+        collection = Object.values(collection);
+      }
+      return collection.length;
+    },
+
+    first: function(array, n=null) {
+      return (n) ? array.slice(0, n) : array[0];
+    },
+
+    last: function(array, n=null) {
+      return (n) ? array.slice(-n, array.length) : array[array.length - 1];
+    },
+
+    compact: function(array) {
+      const falsyValues = new Set([false, null, 0, "", undefined, NaN]);
+      return array.filter(element => {
+       return !falsyValues.has(element)
+      });
+    },
+
+    sortBy: function(array, callback) {
+      const newArray = [...array];
+      return newArray.sort(function(a, b) {
+        return callback(a) - callback(b);
+      });
+    }
 
 
   }
