@@ -82,10 +82,18 @@ const fi = (function() {
     },
 
     compact: function(array) {
-      const falsyValues = new Set([false, null, 0, "", undefined, NaN]);
-      return array.filter(element => {
-       return !falsyValues.has(element)
-      });
+      // const falsyValues = new Set([false, null, 0, "", undefined, NaN]);
+      // return array.filter(element => {
+      //  return !falsyValues.has(element)
+      // });
+      const newArray = [];
+      
+      for (let i = 0; i < array.length; i++) {
+        if (array[i]) {
+          newArray.push(array[i]);
+        }
+      }
+      return newArray;
     },
 
     sortBy: function(array, callback) {
@@ -93,6 +101,67 @@ const fi = (function() {
       return newArray.sort(function(a, b) {
         return callback(a) - callback(b);
       });
+    },
+
+    flatten: function(array, shallow=false) {
+      return shallow ? array.flat() : array.flat(Infinity);
+    },
+
+    uniqSorted: function(collection) {
+      const sorted = [collection[0]];
+
+      for (let i = 1; i < collection.length; i++) {
+        if (sorted[i - 1] !== collection[i]) {
+          sorted.push(collection[i]);
+        }
+      }
+      return sorted;
+    },
+
+    uniq: function(collection, isSorted=false, cb=false) {
+      if (isSorted) {
+        return fi.uniqSorted(collection);
+      } else if (!cb) {
+        return Array.from(new Set(collection));
+      } else {
+        const uniqueValues = new Set();
+        const modifiedValues = new Set();
+        for (let val of collection) {
+          const modifiedValue = cb(val);
+          if (!modifiedValues.has(modifiedValue)) {
+            modifiedValues.add(modifiedValue);
+            uniqueValues.add(val)
+          }
+        }
+        return Array.from(uniqueValues);
+      }
+    },
+
+    keys: function(object) {
+      const keys = [];
+      for (let key in object) {
+        keys.push(key);
+      }
+      return keys;
+    },
+
+    values: function(object) {
+      const values = [];
+      for (let key in object) {
+        values.push(object[key]);
+      }
+      return values;
+    },
+
+    functions: function(object) {
+      const functionNames = [];
+
+      for (let key in object) {
+        if (typeof object[key] === "function") {
+          functionNames.push(key);
+        }
+      }
+      return functionNames.sort();
     }
 
 
