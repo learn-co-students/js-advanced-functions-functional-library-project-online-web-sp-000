@@ -26,9 +26,20 @@ const fi = (function() {
       return newCollection;
     },
 
-    reduce: function() {
+    reduce: function(c = [], callback = () => {}, acc) {
+			let collection = c.slice(0);
 
-    },
+			if (!acc) {
+				acc = collection[0];
+				collection = collection.slice(1);
+			}
+
+
+			for (let i = 0; i < collection.length; i++) {
+				acc = callback(acc, collection[i], collection);
+			}
+			return acc;
+		},
 
     functions: function() {
 
@@ -38,4 +49,4 @@ const fi = (function() {
   }
 })();
 
-fi.libraryMethod()
+fi.libraryMethod();
