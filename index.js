@@ -7,8 +7,9 @@ const fi = (function () {
     each: function (collection, callback) {
       for (let i = 0; i < collection.length; i++) {
         const element = collection[i];
-        callback(element);
+        callback(element, i, collection);
       }
+      return collection
     },
 
     map: function () {
