@@ -154,7 +154,6 @@ const fi = (function() {
           }
         }
       }
-      debugger
       return newArray
 
     },
