@@ -35,8 +35,14 @@ const fi = (function() {
       return acc
     },
 
-    functions: function() {
-
+    functions: function(object) {
+      let answer = []
+      for (const key in object) {
+        if (typeof(object[key]) === "function" ) {
+          answer.push(key);
+        }
+      }
+      return answer
     },
 
     find: function(collection, predicate) {
@@ -166,6 +172,22 @@ const fi = (function() {
         return newArray
       }
     },
+
+    keys: function(object) {
+      let keys = [];
+      for (const key in object) {
+        keys.push(key);
+      }
+      return keys
+    },
+
+    values: function(object) {
+      let values = [];
+      for (const key in object) {
+        values.push(object[key]);
+      }
+      return values
+    }
 
   }
 })()
