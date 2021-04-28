@@ -21,18 +21,12 @@ const fi = (function() {
     },
 
     reduce: function(collection, callback, acc) {
-      // question: so ^ acc is declared bc of being in the function defintion, whether it is or is not included in function call?
-      let i = acc ? 0 : 1
-      // let memo = acc ? acc : collection[0] --which is better? -this or below
-      acc = acc ? acc : collection[0]
+      let i = typeof acc === "undefined" ? 1 : 0;
+      let memo = typeof acc === "undefined" ? collection[0] : acc;
       for(; i < collection.length; i++) {
-        //question: you can use a for loop with 'i' to iterate theough objects??
-        acc = callback(acc, collection[i], collection)
+        memo = callback(memo, collection[i], collection);
       }
-      // for (const key in collection) {
-      //  callback(acc, collection[key], collection)
-      // }
-      return acc
+      return memo
     },
 
     functions: function(object) {
@@ -117,7 +111,29 @@ const fi = (function() {
       })
     },
 
-    flatten: function(array, boolean) {
+    flatten: function(array, onlyOneDepth = false) {
+      const newArray = [];
+
+      function recurse(collection = [], depth = 0) {
+        if (onlyOneDepth && depth > 1) {
+          newArray.push(collection);
+          return;
+        }
+
+        if (typeof collection !== "object") {
+          newArray.push(collection);
+          return;
+        }
+
+        for (const element of collection) {
+          recurse(element, depth + 1);
+        }
+      }
+
+      recurse(array);
+
+      return newArray;
+
       if (boolean === true) {
         let newArray = [];
         for (let i = 0; i < array.length; i++) {
@@ -149,28 +165,28 @@ const fi = (function() {
     },
 
     uniq: function(array, isSorted, callback) {
+      //didn't use is sorted, can apparently simplify if it is
+      let newArray = [];
+
       if (callback) {
-        let newArr = [];
         let callbackValues = [];
         for (let i = 0; i < array.length; i++) {
-          let value = array[i];
-          let thisRound = callback(value);
+          let thisRound = callback(array[i]);
           if (!callbackValues.includes(thisRound)) {
-            newArr.push(value);
+            newArray.push(array[i]);
           }
           callbackValues.push(thisRound);
         }
-        return newArr
 
       } else {
-        let newArray = [];
         for (let i = 0; i < array.length; i++) {
           if (!newArray.includes(array[i])) {
             newArray.push(array[i]);
           }
         }
-        return newArray
       }
+
+      return newArray
     },
 
     keys: function(object) {
