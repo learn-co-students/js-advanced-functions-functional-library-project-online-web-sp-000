@@ -111,33 +111,11 @@ const fi = (function() {
       })
     },
 
-    flatten: function(array, onlyOneDepth = false) {
+    flatten: function(array, boolean) {
       const newArray = [];
-
-      function recurse(collection = [], depth = 0) {
-        if (onlyOneDepth && depth > 1) {
-          newArray.push(collection);
-          return;
-        }
-
-        if (typeof collection !== "object") {
-          newArray.push(collection);
-          return;
-        }
-
-        for (const element of collection) {
-          recurse(element, depth + 1);
-        }
-      }
-
-      recurse(array);
-
-      return newArray;
-
       if (boolean === true) {
-        let newArray = [];
         for (let i = 0; i < array.length; i++) {
-          if (typeof(array[i]) === "number") {
+          if (typeof(array[i]) !== "object") {
             newArray.push(array[i]);
           } else {
             let thisArray = array[i].slice();
@@ -146,26 +124,23 @@ const fi = (function() {
             }
           }
         }
-        return newArray
       } else {
-        let noNestArray = [];
         let unnesting = (array) => {
           for (let i = 0; i < array.length; i++) {
-            if (typeof(array[i]) === "number") {
-              noNestArray.push(array[i]);
+            if (typeof(array[i]) !== "object") {
+              newArray.push(array[i]);
             } else {
-              let thisArray = array[i].slice()
-              unnesting(thisArray);
+              unnesting(array[i]);
             }
           }
         }
         unnesting(array);
-        return noNestArray
       }
+      return newArray;
     },
 
     uniq: function(array, isSorted, callback) {
-      //didn't use is sorted, can apparently simplify if it is
+      //didn't use isSorted, can apparently simplify if it is - can skip evaulation for repeat elements if sorted
       let newArray = [];
 
       if (callback) {
