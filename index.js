@@ -116,16 +116,32 @@ const fi = (function() {
       return rArr
     },
 
-    flatten: function(list, oneLevel = false){
-      if (oneLevel){
-        let rArr = list.flat(1)
-        return rArr
+    flatten: function(list, oneLevel = false){},
+
+    uniq: function(list, isSorted, callback = function(x){ return x}){
+      let rArr = []
+      let val = ""
+      console.log(list)
+      if (isSorted){
+        for (const i in list){
+          if ( callback(val) != callback(list[i])){
+            rArr.push(list[i])
+          }
+          val = list[i]
+        }
       }
       else{
-        let rArr = list.flat()
-        return rArr
+        let sorted = list.sort(function(x, y){ return callback(x) > callback(y)})
+        for (const i in sorted){
+          if ( callback(val) != callback(sorted[i])){
+            rArr.push(sorted[i])
+          }
+          val = list[i]
+        }
       }
-    },
+      console.log(rArr)
+      return rArr
+    }
 
 
 
