@@ -1,0 +1,27 @@
+{
+  "stats": {
+    "suites": 0,
+    "tests": 0,
+    "passes": 0,
+    "pending": 0,
+    "failures": 1,
+    "start": "2021-05-18T23:54:25.214Z",
+    "end": "2021-05-18T23:54:30.977Z",
+    "duration": 5763
+  },
+  "tests": [],
+  "pending": [],
+  "failures": [
+    {
+      "title": "\"before all\" hook",
+      "fullTitle": "\"before all\" hook",
+      "duration": 5743,
+      "currentRetry": 0,
+      "err": {
+        "stack": "Error: Timeout of 2000ms exceeded. For async tests and hooks, ensure \"done()\" is called; if returning a Promise, ensure it resolves.\n    at Object.done (node_modules/mocha-jsdom/index.js:70:7)\n    at /home/clone18476/code/labs/js-advanced-functions-functional-library-project-online-web-sp-000/node_modules/jsdom/lib/jsdom.js:312:18\n    at processTicksAndRejections (node:internal/process/task_queues:76:11)",
+        "message": "Timeout of 2000ms exceeded. For async tests and hooks, ensure \"done()\" is called; if returning a Promise, ensure it resolves."
+      }
+    }
+  ],
+  "passes": []
+}
