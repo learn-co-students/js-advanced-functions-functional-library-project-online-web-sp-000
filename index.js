@@ -104,19 +104,53 @@ sortBy: function(array, callback) {
 },
 
 uniq: function(array, isSorted, callback) { 
-  console.log(callback)
-  if (isSorted === false) { 
-    const sortedArray = fi.sortBy(array, callback)
-    const hash = {}, result = [];
+  let uniqueArray = []
 
-  for (var i = 0; i < sortedArray.length; i++)
-    for (var j = i + 1; j < arr.length; j++)
-        if (arr[i] === arr[j])
-        result.push(arr[i])
+  //console.log("array:", array)
+   //maybe check and see if they give a callback
+  if (callback) {
+    let changedArray = []
+    for ()
+    //console.log("callback: ", callback)
+    if (isSorted === false) { 
+      let result = new Set()
+      let moddedValues = new Set()
+      const sortedArray = array.sort()
+      //console.log("sortedArray:", sortedArray)
+      for (let i = 0; i < sortedArray.length; i++) {
+      let modifiedItem = callback(sortedArray[i])
+        //console.log("modifiedItem:", modifiedItem)
+      if (!moddedValues.has(modifiedItem)) 
+        moddedValues.add(modifiedItem)
+        result.add(sortedArray[i])
+      
+      }
+      //console.log("isNotSorted", Array.from(result) )
+      return Array.from(result)
+
+    }
+  else { let result = new Set()
+    let moddedValues = new Set()
+    for (let i = 0; i < array.length; i++) {
+    let modifiedItem = callback(array[i])
+    if (!moddedValues.has(modifiedItem)) 
+      moddedValues.add(modifiedItem)
+      result.add(array[i])
+    
+    }
+  //console.log("isSorted", Array.from(result) )
+    return Array.from(result)
 
   }
-  return array
+  
 
+}
+
+else { 
+  let newSet = new Set(array) 
+return Array.from(newSet)
+}
+return array
 }
   }
 })()
